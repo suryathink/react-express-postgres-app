@@ -27,7 +27,7 @@ export class AuthController {
       res.status(StatusCodes.CREATED).json({ user });
     } catch (error: any) {
       console.log("error", error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: error.message || "Internal server error",
       });
     }
@@ -41,7 +41,7 @@ export class AuthController {
       res.status(StatusCodes.OK).json({ user, token });
     } catch (error: any) {
       console.log("error", error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: error.message || "Internal server error",
       });
     }

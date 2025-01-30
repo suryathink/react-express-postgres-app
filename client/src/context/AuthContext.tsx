@@ -43,7 +43,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(user);
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(user));
-    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   };
 
   const login = useCallback(async (data: LoginInput) => {
@@ -52,8 +51,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       const response = await axios.post(`${API_URL}/api/v1/user/login`, data);
       handleAuthResponse(response.data);
       toast.success("Logged in successfully");
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "An error occurred";
+    } catch (err: any) {
+      let message = "An error occurred";
+      if (err.response?.data?.message) {
+        message = err.response.data.message;
+      } else if (err.message) {
+        message = err.message;
+      }
+
       setError(message);
       toast.error(message);
       throw err;
@@ -71,8 +76,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       handleAuthResponse(response.data);
       toast.success("Registered successfully");
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "An error occurred";
+    } catch (err: any) {
+      let message = "An error occurred";
+
+      if (err.response?.data?.message) {
+        message = err.response.data.message;
+      } else if (err.message) {
+        message = err.message;
+      }
+
       setError(message);
       toast.error(message);
       throw err;

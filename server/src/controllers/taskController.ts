@@ -53,7 +53,7 @@ export class TaskController {
       res.status(StatusCodes.OK).json(task);
     } catch (error: any) {
       console.log("error", error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: error.message || "Internal server error",
       });
     }
@@ -68,7 +68,7 @@ export class TaskController {
       res.status(StatusCodes.NO_CONTENT).send();
     } catch (error: any) {
       console.log("error", error);
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
         message: error.message || "Internal server error",
       });
     }
