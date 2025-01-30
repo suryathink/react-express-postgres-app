@@ -25,7 +25,7 @@ DATABASE_URL=postgresql://myuser:mypassword@localhost:5434/mydatabase
 PG_PASSWORD=mypassword
 PG_DB=mydatabase
 PG_HOST=localhost
-PG_PORT=5434
+PG_PORT=5432
 
 JWT_SECRET="random@test1234"
 PORT=5000
@@ -39,9 +39,9 @@ VITE_API_URL=http://localhost:5000
 ## Running PostgreSQL with Docker
 To start a PostgreSQL container using Docker, run:
 ```sh
-docker run --name taskmanager-db -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydatabase -p 5434:5432 -d postgres
+docker run --name taskmanager-db -e POSTGRES_USER=myuser -e POSTGRES_PASSWORD=mypassword -e POSTGRES_DB=mydatabase -p 5432:5432 -d postgres
 ```
-This will create and run a PostgreSQL container accessible on `localhost:5434`.
+This will create and run a PostgreSQL container accessible on `localhost:5432`.
 
 ## Installation & Setup
 
