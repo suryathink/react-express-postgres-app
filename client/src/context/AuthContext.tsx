@@ -17,6 +17,7 @@ interface AuthContextType {
   register: (data: RegisterInput) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
+  validateToken: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -70,11 +71,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const register = useCallback(async (data: RegisterInput) => {
     try {
       setLoading(true);
-      const response = await axios.post(
-        `${API_URL}/api/v1/user/register`,
-        data
-      );
-      handleAuthResponse(response.data);
+      await axios.post(`${API_URL}/api/v1/user/register`, data);
       toast.success("Registered successfully");
     } catch (err: any) {
       let message = "An error occurred";
@@ -92,6 +89,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(false);
     }
   }, []);
+  const validateToken = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Login again!");
+      }
+
+      const response = await axios.get(
+        `${API_URL}/api/v1/user/validate-token`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.data.success) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUser(null);
+      }
+    } catch (err: any) {
+      let message = "An error occurred";
+      if (err.response?.data?.message) {
+        message = err.response.data.message;
+      } else if (err.message) {
+        message = err.message;
+      }
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+      // toast.error(message);
+    }
+  };
 
   const logout = useCallback(() => {
     setUser(null);
@@ -110,6 +142,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         register,
         logout,
         isAuthenticated: !!user,
+        validateToken,
       }}
     >
       {children}

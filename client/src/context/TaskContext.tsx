@@ -30,7 +30,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(true);
       const token = localStorage.getItem("token");
       if (!token) {
-        throw new Error("No token found");
+        throw new Error("Login again!");
       }
       const config = {
         headers: {
@@ -55,7 +55,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
         const token = localStorage.getItem("token");
 
         if (!token) {
-          throw new Error("No authentication token found.");
+          throw new Error("Login again!");
         }
 
         await axios.post(`${API_URL}/api/v1/todo`, task, {
@@ -84,7 +84,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const token = localStorage.getItem("token");
         if (!token) {
-          throw new Error("No authentication token found.");
+          throw new Error("Login again!");
         }
         setLoading(true);
         await axios.put(`${API_URL}/api/v1/todo/${id}`, task, {
@@ -112,7 +112,7 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(true);
         const token = localStorage.getItem("token");
         if (!token) {
-          throw new Error("No token found");
+          throw new Error("Login again!");
         }
         const config = {
           headers: {

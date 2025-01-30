@@ -46,4 +46,14 @@ export class AuthController {
       });
     }
   }
+  public static async ValidateToken(req: Request, res: Response) {
+    try {
+      res.status(StatusCodes.OK).json({ success: true });
+    } catch (error: any) {
+      console.log("error", error);
+      res.status(error.status || StatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: error.message || "Internal server error",
+      });
+    }
+  }
 }
