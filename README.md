@@ -97,6 +97,10 @@ This will create and run a PostgreSQL container accessible on `localhost:5432`.
 - The `/tasks` route in the frontend is protected, requiring successful authentication.
 
 
+## Demo Video 🎥
+
+
+Watch the demo video [here](https://github.com/user-attachments/assets/e9d89be2-52de-4a59-9946-a2f1d4fa71c2)
 
 ---
 
