@@ -87,7 +87,6 @@ This will create and run a PostgreSQL container accessible on `localhost:5432`.
 - `DELETE /api/v1/todo/:id` - Delete a task
 
 ## Frontend Routes
-- `/` - Home Page
 - `/login` - User Login Page
 - `/register` - User Registration Page
 - `/tasks` - **Protected Route** (Accessible only after login)
