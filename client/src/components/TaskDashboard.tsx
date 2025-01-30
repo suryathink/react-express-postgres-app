@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useTaskContext } from "../context/TaskContext";
 import { Task } from "../types/task";
 import { TaskForm } from "./TaskForm";
 import { TaskList } from "./TaskList";
@@ -11,11 +12,15 @@ export const TaskDashboard: React.FC = () => {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { fetchTasks } = useTaskContext();
 
   const handleLogout = () => {
     logout();
     navigate("/login");
   };
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
 
   return (
     <Container maxWidth="md" sx={{ py: 4 }}>
