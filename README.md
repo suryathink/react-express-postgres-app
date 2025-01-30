@@ -1,4 +1,4 @@
-# Task Manager App
+# Todo Manager App
 
 ## Overview
 This is a full-stack Task Manager application with authentication and task management functionality. The backend is built using Node.js, Express, and PostgreSQL, while the frontend is built with React and Vite.
