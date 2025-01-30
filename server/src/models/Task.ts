@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../configs/database";
-import User from "./User.js";
+import User from "./User";
 
 class Task extends Model {
   public id!: string;

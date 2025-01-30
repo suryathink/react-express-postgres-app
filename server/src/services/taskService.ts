@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import Task from "../models/Task.js";
+import Task from "../models/Task";
 
 class TaskService {
   async createTask(userId: string, title: string, description: string) {

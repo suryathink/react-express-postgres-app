@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import User from "../models/User";
 
 class AuthService {
   async register(name: string, email: string, password: string) {

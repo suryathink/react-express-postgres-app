@@ -13,7 +13,7 @@ export class TaskController {
     try {
       await taskSchema.validate(req.body);
       const { title, description } = req.body;
-      const userId = req.user.id;
+      const userId = req.user!.id;
 
       const task = await TaskService.createTask(userId, title, description);
       res.status(StatusCodes.CREATED).json(task);
@@ -31,7 +31,7 @@ export class TaskController {
 
   public static async getTasks(req: Request, res: Response) {
     try {
-      const userId = req.user.id;
+      const userId = req.user!.id;
       const tasks = await TaskService.getTasks(userId);
       res.status(StatusCodes.OK).json(tasks);
     } catch (error) {
@@ -46,7 +46,7 @@ export class TaskController {
       await taskSchema.validate(req.body);
       const { title, description } = req.body;
       const { id: taskId } = req.params;
-      const userId = req.user.id;
+      const userId = req.user!.id;
 
       const task = await TaskService.updateTask(
         taskId,
@@ -70,7 +70,7 @@ export class TaskController {
   public static async deleteTask(req: Request, res: Response) {
     try {
       const { id: taskId } = req.params;
-      const userId = req.user.id;
+      const userId = req.user!.id;
 
       await TaskService.deleteTask(taskId, userId);
       res.status(StatusCodes.NO_CONTENT).send();
