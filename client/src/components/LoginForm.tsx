@@ -17,7 +17,7 @@ export const LoginForm: React.FC = () => {
       await login({ email, password });
       navigate("/tasks");
     } catch (error) {
-      // Error is handled by AuthContext
+      console.log("Error", error);
     }
   };
 

@@ -21,7 +21,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_URL = "http://localhost:5000/api/v1/user";
+// const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -35,7 +36,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const storedUser = localStorage.getItem("user");
     if (token && storedUser) {
       setUser(JSON.parse(storedUser));
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
   }, []);
 
@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const login = useCallback(async (data: LoginInput) => {
     try {
       setLoading(true);
-      const response = await axios.post(`${API_URL}/login`, data);
+      const response = await axios.post(`${API_URL}/api/v1/user/login`, data);
       handleAuthResponse(response.data);
       toast.success("Logged in successfully");
     } catch (err) {
@@ -65,7 +65,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const register = useCallback(async (data: RegisterInput) => {
     try {
       setLoading(true);
-      const response = await axios.post(`${API_URL}/register`, data);
+      const response = await axios.post(
+        `${API_URL}/api/v1/user/register`,
+        data
+      );
       handleAuthResponse(response.data);
       toast.success("Registered successfully");
     } catch (err) {
@@ -82,7 +85,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     setUser(null);
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    delete axios.defaults.headers.common["Authorization"];
     toast.success("Logged out successfully");
   }, []);
 

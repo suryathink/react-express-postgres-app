@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
+import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./context/AuthContext";
 import { TaskProvider } from "./context/TaskContext";
 import { LoginForm } from "./components/LoginForm";
 import { RegisterForm } from "./components/RegisterForm";
 import { TaskDashboard } from "./components/TaskDashboard";
 import { PrivateRoute } from "./components/PrivateRoute";
-import { Toaster } from "react-hot-toast";
 
 function App() {
   return (

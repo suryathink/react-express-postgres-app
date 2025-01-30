@@ -15,7 +15,8 @@ interface TaskContextType {
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
-const API_URL = "http://localhost:5000/api/v1";
+// const API_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -27,7 +28,16 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
   const fetchTasks = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API_URL}/todo`);
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("No token found");
+      }
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(`${API_URL}/api/v1/todo`, config);
       setTasks(response.data);
     } catch (err) {
       const message = err instanceof Error ? err.message : "An error occurred";
@@ -42,7 +52,19 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
     async (task: CreateTaskInput) => {
       try {
         setLoading(true);
-        await axios.post(`${API_URL}/todo`, task);
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          throw new Error("No authentication token found.");
+        }
+
+        await axios.post(`${API_URL}/api/v1/todo`, task, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
         await fetchTasks();
         toast.success("Task created successfully");
       } catch (err) {
@@ -60,8 +82,17 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
   const updateTask = useCallback(
     async (id: string, task: CreateTaskInput) => {
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No authentication token found.");
+        }
         setLoading(true);
-        await axios.put(`${API_URL}/todo/${id}`, task);
+        await axios.put(`${API_URL}/api/v1/todo/${id}`, task, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
         await fetchTasks();
         toast.success("Task updated successfully");
       } catch (err) {
@@ -75,12 +106,20 @@ export const TaskProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     [fetchTasks]
   );
-
   const deleteTask = useCallback(
     async (id: string) => {
       try {
         setLoading(true);
-        await axios.delete(`${API_URL}/todo/${id}`);
+        const token = localStorage.getItem("token");
+        if (!token) {
+          throw new Error("No token found");
+        }
+        const config = {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        };
+        await axios.delete(`${API_URL}/api/v1/todo/${id}`, config);
         await fetchTasks();
         toast.success("Task deleted successfully");
       } catch (err) {

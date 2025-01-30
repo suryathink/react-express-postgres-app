@@ -26,7 +26,7 @@ export const TaskDashboard: React.FC = () => {
         mb={4}
       >
         <Typography variant="h3" component="h1">
-          Task Manager
+          Todo Manager
         </Typography>
         <Box>
           <Typography variant="subtitle1" component="span" sx={{ mr: 2 }}>
