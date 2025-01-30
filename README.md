@@ -27,7 +27,7 @@ PG_DB=mydatabase
 PG_HOST=localhost
 PG_PORT=5432
 
-JWT_SECRET="random@test1234"
+JWT_SECRET="jwt_secret"
 PORT=5000
 ```
 
@@ -97,9 +97,7 @@ This will create and run a PostgreSQL container accessible on `localhost:5432`.
 - The backend should be running on port `5000`, and the frontend communicates with it via `VITE_API_URL=http://localhost:5000`.
 - The `/tasks` route in the frontend is protected, requiring successful authentication.
 
-## License
-This project is licensed under the MIT License.
+
 
 ---
-🚀 Happy Coding!
 
