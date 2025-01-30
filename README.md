@@ -102,5 +102,15 @@ This will create and run a PostgreSQL container accessible on `localhost:5432`.
 
 Watch the demo video [here](https://github.com/user-attachments/assets/e9d89be2-52de-4a59-9946-a2f1d4fa71c2)
 
+## Demo Video 🎥
+
+<video width="600" controls>
+  <source src="https://github-production-user-asset-6210df.s3.amazonaws.com/96377101/408317427-e9d89be2-52de-4a59-9946-a2f1d4fa71c2.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+[Watch the demo video](https://github-production-user-asset-6210df.s3.amazonaws.com/96377101/408317427-e9d89be2-52de-4a59-9946-a2f1d4fa71c2.mp4)
+
+
 ---
 
