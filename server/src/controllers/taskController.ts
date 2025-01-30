@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import * as yup from "yup";
-import TaskService from "../services/taskService";
+import { TaskService } from "../services/taskService";
 
 const taskSchema = yup.object().shape({
   title: yup.string().required(),
@@ -17,14 +17,10 @@ export class TaskController {
 
       const task = await TaskService.createTask(userId, title, description);
       res.status(StatusCodes.CREATED).json(task);
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-          message: error.message,
-        });
-      }
+    } catch (error: any) {
+      console.log("error", error);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: "Internal server error",
+        message: error.message || "Internal server error",
       });
     }
   }
@@ -34,9 +30,9 @@ export class TaskController {
       const userId = req.user!.id;
       const tasks = await TaskService.getTasks(userId);
       res.status(StatusCodes.OK).json(tasks);
-    } catch (error) {
+    } catch (error: any) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: "Internal server error",
+        message: error.message || "Internal server error",
       });
     }
   }
@@ -55,14 +51,10 @@ export class TaskController {
         description
       );
       res.status(StatusCodes.OK).json(task);
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-          message: error.message,
-        });
-      }
+    } catch (error: any) {
+      console.log("error", error);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: "Internal server error",
+        message: error.message || "Internal server error",
       });
     }
   }
@@ -74,9 +66,10 @@ export class TaskController {
 
       await TaskService.deleteTask(taskId, userId);
       res.status(StatusCodes.NO_CONTENT).send();
-    } catch (error) {
+    } catch (error: any) {
+      console.log("error", error);
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: "Internal server error",
+        message: error.message || "Internal server error",
       });
     }
   }

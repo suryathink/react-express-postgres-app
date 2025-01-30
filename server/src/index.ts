@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Express } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import sequelize from "./configs/database";
@@ -6,18 +6,13 @@ import { routes } from "./routes/index";
 
 dotenv.config();
 
-console.log(
-  "password",
-  process.env.PG_PASSWORD,
-  typeof process.env.PG_PASSWORD
-);
-
-const app = express();
-
-app.use(cors());
+const app: Express = express(); // Initialize the Express app
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.options("*", cors());
 
-app.use(routes);
+routes(app);
 
 const PORT = process.env.PORT!;
 

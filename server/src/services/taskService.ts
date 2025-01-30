@@ -1,8 +1,12 @@
 import { StatusCodes } from "http-status-codes";
 import Task from "../models/Task";
 
-class TaskService {
-  async createTask(userId: string, title: string, description: string) {
+export class TaskService {
+  public static async createTask(
+    userId: string,
+    title: string,
+    description: string
+  ) {
     try {
       const task = await Task.create({
         userId,
@@ -18,7 +22,7 @@ class TaskService {
     }
   }
 
-  async getTasks(userId: string) {
+  public static async getTasks(userId: string) {
     try {
       const tasks = await Task.findAll({
         where: { userId },
@@ -33,7 +37,7 @@ class TaskService {
     }
   }
 
-  async updateTask(
+  public static async updateTask(
     taskId: string,
     userId: string,
     title: string,
@@ -61,7 +65,7 @@ class TaskService {
     }
   }
 
-  async deleteTask(taskId: string, userId: string) {
+  public static async deleteTask(taskId: string, userId: string) {
     try {
       const task = await Task.findOne({
         where: { id: taskId, userId },
@@ -83,5 +87,3 @@ class TaskService {
     }
   }
 }
-
-export default new TaskService();
