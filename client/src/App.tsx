@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { CssBaseline } from "@mui/material";
+import { AuthProvider } from "./context/AuthContext";
+import { TaskProvider } from "./context/TaskContext";
+import { LoginForm } from "./components/LoginForm";
+import { RegisterForm } from "./components/RegisterForm";
+import { TaskDashboard } from "./components/TaskDashboard";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { Toaster } from "react-hot-toast";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <AuthProvider>
+        <TaskProvider>
+          <CssBaseline />
+          <Toaster position="top-right" />
+          <Routes>
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterForm />} />
+            <Route
+              path="/tasks"
+              element={
+                <PrivateRoute>
+                  <TaskDashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/" element={<Navigate to="/tasks" replace />} />
+          </Routes>
+        </TaskProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
